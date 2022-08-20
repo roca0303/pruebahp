@@ -70,7 +70,7 @@ const DataTableCrudPaises = () => {
                 setPaisesInfo(null);
             }
             else{
-                var infoPaises = data.slice(data.length-30);
+                var infoPaises = data.slice(data.length-360);
                 setPaisNombre(infoPaises[0]["Country"]);
                 setPaisesInfo(infoPaises);
             }
