@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Getting Started with Create React App - esta creado para un prueba tecnica
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
