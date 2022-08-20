@@ -47,15 +47,6 @@ const DataTableCrudDemo = () => {
     const dt = useRef(null);
     const [date7] = useState(null);
 
-
-    // useEffect(() => {
-    //     //productService.getProducts().then(data => setProducts(data));
-    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    const formatCurrency = (value) => {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
-
     const openNew = () => {
         setProduct(emptyProduct);
         setSubmitted(false);
@@ -139,20 +130,11 @@ const DataTableCrudDemo = () => {
         setProduct(_product);
     }
 
+    // componente barra de herramientas izwuierda para mostrar el agregar nuevo paciente
     const leftToolbarTemplate = () => {
         return (
             <React.Fragment>
                 <Button label="Agregar" icon="pi pi-plus" className="p-button-success mr-2" onClick={openNew} />
-                {/* <Button label="Borrar" icon="pi pi-trash" className="p-button-danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} /> */}
-            </React.Fragment>
-        )
-    }
-
-    const rightToolbarTemplate = () => {
-        return (
-            <React.Fragment>
-                {/* <FileUpload mode="basic" name="demo[]" auto url="https://primefaces.org/primereact/showcase/upload.php" accept=".csv" chooseLabel="Import" className="mr-2 inline-block" onUpload={importCSV} />
-                <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} /> */}
             </React.Fragment>
         )
     }
@@ -208,7 +190,7 @@ const DataTableCrudDemo = () => {
             <Toast ref={toast} />
 
             <div className="card">
-                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+                <Toolbar className="mb-4" left={leftToolbarTemplate} ></Toolbar>
 
                 <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
                     dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
