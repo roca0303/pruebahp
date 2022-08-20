@@ -2,7 +2,7 @@
 
 
 
-export class PartidoService {
+export class PaisesService {
 
     getPaisesList() {
         //var respuesta = fetch('http://192.168.1.27/public/laraveldocker/public/api/partidos', {

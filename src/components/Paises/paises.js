@@ -6,7 +6,7 @@ import '../../index.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { PartidoService } from './paisesService';
+import { PaisesService } from './paisesService';                // COMPONENTE CON LAS CONEXIONES Y PETICIONES A LA API
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
@@ -35,99 +35,58 @@ const DataTableCrudDemo = () => {
     const [products, setProducts] = useState(null);
     const [paisesInfo, setPaisesInfo] = useState(null);
     const [paisNombre, setPaisNombre] = useState(null);
-
-    // const [permisoPagina, setPermisoPagina] = useState(null);
     const [productDialog, setProductDialog] = useState(false);
-    //const [productDialog1, setProductDialog1] = useState(false);
-    // const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-    // const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
     const [product, setProduct] = useState(emptyProduct);
     const [infoGlobals, setInfoGlobals] = useState(emptyProduct);
-    const [selectedProducts, setSelectedProducts] = useState(null);
-    const [selectedProducts1, setSelectedProducts1] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
+    const [selectedProducts, setSelectedProducts] = useState(null);     // se usa para los datos de la api, 
+    const [selectedProducts1, setSelectedProducts1] = useState(null);   // se usa para los datos de la dt 2 - informacion de los últimos 30 registros del país seleccionado
     const [globalFilter, setGlobalFilter] = useState(null);
     const [globalFilter1, setGlobalFilter1] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
-    const productService = new PartidoService();
+    const paisesService = new PaisesService();
     const { token } = useToken();
 
+    // cada vez que se refresque o se modifique el dom vuelvo a preguntar por informacion.
     useEffect(() => {
-        productService.getPaisesList(token).then(data => {
-            //console.log (data['Countries']);
+        paisesService.getPaisesList(token).then(data => {
             if (data == "Error"){
                 //setPermisoPagina(null);
                 setProducts(null);
             }
             else{
-                //console.log("poraquie cai");
                 //setPermisoPagina(true);
-                //console.log(data);
                 setProducts(data['Countries']);
                 setInfoGlobals(data['Global']);
             }
         });
-        //teamService.getTeamsList(token).then(data => setCountries(data));
-
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    const openNew = () => {
-        //let _product = {...product};
-        //setSelectedCountry1(null);
-        //setSelectedCountry2(null);
-        setProduct(emptyProduct);
-        setSubmitted(false);
-        setProductDialog(true);
-        //console.log(_product);
-    }
+    }, []);
 
     const openInfoPais = (e) => {
         // se pasa el SLUG del pais para la petición a la api de la información del país.
-        setProductDialog(true); 
-        console.log(e.Slug);
-        productService.getPaisResgistros(e.Slug).then(data => {
+        setProductDialog(true);         // bandera para indicar si se muestra el modal con la segunda dt
+        // se hace el llamado al metodo que trae la información de cada país
+        paisesService.getPaisResgistros(e.Slug).then(data => {
             if (data == "Error"){
                 //setPermisoPagina(null);
                 setPaisesInfo(null);
             }
             else{
                 var infoPaises = data.slice(data.length-30);
-                console.log(infoPaises);
+                //console.log(infoPaises);
                 setPaisNombre(infoPaises[0]["Country"]);
                 setPaisesInfo(infoPaises);
-                //setInfoGlobals(data['Global']);
             }
         });
                 
     }
 
+    // ocultar el modal con la informacion del país
     const hideDialog = () => {
         setProductDialog(false);
     }
 
-    // const onInputChange = (e, name) => {
-    //     const val = e.value.id;//(e.target && e.target.value) || '';
-    //     let _product = {...product};
-    //     _product[`${name}`] = val;
-    //     setProduct(_product);
-    // }
-
-    // const onInputChangeDateTime = (e, name) => {
-    //     const val = (e.target && e.target.value) || '';
-    //     let _product = {...product};
-    //     _product[`${name}`] = val;
-    //     setProduct(_product);
-    // }
-
-    // const onInputChange1 = (e, name, rowData) => {
-    //     const val = e.value;
-    //     let _product = {...product};
-    //     _product[`${name}`] = val;
-    //     setProduct(_product);
-    //     //console.log(_product);
-    // }
-
+    // renderizar la información de los globales
     const leftToolbarTemplate = () => {
         return (
             <React.Fragment>
@@ -140,30 +99,7 @@ const DataTableCrudDemo = () => {
         )
     }
 
-    // const imageBodyTemplate = (rowData) => {
-    //     let url = process.env.REACT_APP_URL_IMAGES+rowData.banderaEquipoLocal;
-    //     return (
-    //         <React.Fragment>
-    //             <img src={url} 
-    //                 onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} 
-    //                 alt={rowData.bandera} className="product-image" />
-    //             <span className={`product-badge status-${rowData.equipoLocal.toLowerCase()}`}>{rowData.equipoLocal}</span>
-    //         </React.Fragment>
-    //     );
-    // }
-
-    // const imageVisitanteBodyTemplate = (rowData) => {
-    //     let url = process.env.REACT_APP_URL_IMAGES+rowData.banderaEquipoVisitante;
-    //     return (
-    //         <React.Fragment>
-    //             <img src={url} 
-    //                 onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} 
-    //                 alt={rowData.banderaEquipoVisitante} className="product-image" />
-    //             <span className={`product-badge status-${rowData.equipoVisitante.toLowerCase()}`}>{rowData.equipoVisitante}</span>
-    //         </React.Fragment>
-    //     );
-    // }
-
+    // encabezado del dt, dentro del encabezado ubico el inputtext para las busquedas
     const header = (
         <div className="table-header">
             <h5 className="mx-0 my-1">Paises</h5>
@@ -174,17 +110,13 @@ const DataTableCrudDemo = () => {
         </div>
     );
 
+    // encabezado del dt usado para la informacion por país, se deja decladado por si se va a usar mas adelante
     const header1 = (
         <React.Fragment>
         </React.Fragment>
     );
     
-    const productDialogFooter = (
-        <React.Fragment>
-        </React.Fragment>
-    );
-
-
+    // renderizar las opciones de cada fila del data table
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
@@ -216,7 +148,7 @@ const DataTableCrudDemo = () => {
                 </DataTable>
 
 
-                <Dialog visible={productDialog} style={{ width: '900px' }} header={"Informacion - " + paisNombre } modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+                <Dialog visible={productDialog} style={{ width: '900px' }} header={"Informacion - " + paisNombre } modal className="p-fluid"  onHide={hideDialog}>
                     <DataTable ref={dt} value={paisesInfo} selection={selectedProducts1} onSelectionChange={(e) => setSelectedProducts1(e.value)}
                         dataKey="id" paginator rows={50} rowsPerPageOptions={[50, 100, 125]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
