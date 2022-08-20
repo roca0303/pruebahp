@@ -35,14 +35,6 @@ const DataTableCrudDemo = () => {
         vomito: -1,
         cabeza: -1,
         estomago: -1,
-
-        image: null,
-        description: '',
-        category: null,
-        price: 0,
-        quantity: 0,
-        rating: 0,
-        inventoryStatus: 'INSTOCK'
     };
 
     const [products, setProducts] = useState([]);
