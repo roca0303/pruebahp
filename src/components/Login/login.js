@@ -105,5 +105,5 @@ async function loginUser(credentials) {
 
 
 Login.propTypes = {
-    setToken: PropTypes.func.isRequired
+    //setToken: PropTypes.func.isRequired
 };

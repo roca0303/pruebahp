@@ -9,7 +9,8 @@ import Paises from '../Paises/paises';
 import Profile from '../Profile/profile';
 //import Bet from '../Bets/bets';
 //import OtherBet from '../OtherBets/otherbets';
-//import Dashboard from '../Dashboard/Dashboard';
+import Dashboard from '../Dashboard/Dashboard';
+import Exam from '../Exam/Exam';
 
 
 function App() {
@@ -20,9 +21,12 @@ function App() {
   return (
     <div className="wrapper">
       <Ppal setToken={setToken}/>
-      <BrowserRouter basename="/pollagol">
+      <BrowserRouter basename="/">
       {/* <BrowserRouter basename="/pollagol"> */}
         <Switch>
+        <Route exact path="/">
+            <Dashboard />
+          </Route>
           <Route exact path="/paises">
             <Paises />
           </Route>
@@ -32,10 +36,10 @@ function App() {
           <Route path="/Login">
             <Login />
           </Route>
-          {/* <Route path="/mybets">
-            <Bet visit="0"/>
+          <Route path="/data">
+            <Exam />
           </Route>
-          <Route path="/otherbets">
+          {/* <Route path="/otherbets">
             <OtherBet />
           </Route> */}
           {/* <Route path="/salir"> */}
@@ -54,12 +58,13 @@ function Ppal( {setToken} ) {
   return (
     <Navbar bg="primary" variant="light" expand="lg"  >
       <Container>
-        <Navbar.Brand href="/pollagol">App de información de COVID - creado por Roberth Campeon - xxxxxxx</Navbar.Brand>
+        <Navbar.Brand href="/">App COVID - Roberth Campeon </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="justify-content-end flex-grow-1 pe-3" variant="pills"  >
               <Nav.Link href="/paises">Paises</Nav.Link>
               <Nav.Link href="/profile">Mi Perfil</Nav.Link>
+              <Nav.Link href="/data">Ingresar Datos</Nav.Link>
               <Nav.Link href="/Login">Autenticar</Nav.Link>
               {/* <NavDropdown title="Apuestas" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/pollagol/mybets">Mis Resultados</NavDropdown.Item>

@@ -5,3 +5,4 @@ export default function Profile() {
     <h2>Mi perfil</h2>
   );
 }
+
