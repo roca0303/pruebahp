@@ -19,17 +19,15 @@ import { Splitter, SplitterPanel } from 'primereact/splitter';
 function App() {
     return (
         <div>
-            <DataTableCrudDemo />
+            <DataTableCrudPaises />
         </div>
     );
 }
 
-const DataTableCrudDemo = () => {
+const DataTableCrudPaises = () => {
 
     let emptyProduct = {
-        teaml_id: null,
-        teamv_id: null,
-        fechaPartido: null,
+
     };
 
     const [products, setProducts] = useState(null);
@@ -73,7 +71,6 @@ const DataTableCrudDemo = () => {
             }
             else{
                 var infoPaises = data.slice(data.length-30);
-                //console.log(infoPaises);
                 setPaisNombre(infoPaises[0]["Country"]);
                 setPaisesInfo(infoPaises);
             }

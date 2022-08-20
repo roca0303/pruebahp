@@ -17,12 +17,12 @@ import '../../index.css';
 function App() {
     return (
         <div>
-            <DataTableCrudDemo />
+            <DataTableCrudForm />
         </div>
     );
 }
 
-const DataTableCrudDemo = () => {
+const DataTableCrudForm = () => {
 
     let emptyProduct = {
         id: null,
